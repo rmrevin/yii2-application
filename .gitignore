@@ -1,0 +1,5 @@
+/.idea
+/.environment.php
+/composer.phar
+/components
+/htpasswd

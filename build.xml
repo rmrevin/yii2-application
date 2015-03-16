@@ -1,0 +1,165 @@
+<project name="Yii2 application build" basedir="." default="build/dev">
+    <!-- Свйоства -->
+    <property name="repo.dir.resolved" value="." override="true"/>
+    <resolvepath propertyName="repo.dir.resolved" file="${repo.dir.resolved}"/>
+
+    <property name="frontend.dir" value="frontend-app/" override="false"/>
+    <property name="frontend.tests.dir" value="frontend-app/tests/" override="false"/>
+
+    <!-- Проверки файлов -->
+    <available property="environment.exists"
+               type="file" file=".environment.php" value="true"/>
+
+    <!-- Конфиг билда для продакшена -->
+    <target name="build/production"
+            depends="environment/check,composer,npm,less,environment/init/production,clear,migrations">
+        <echo>Билд продакшена успешно завершён</echo>
+    </target>
+
+    <!-- Конфиг билда для demo площадки -->
+    <target name="build/demo"
+            depends="environment/check,composer,npm,less,environment/init/demo,clear,migrations">
+        <echo>Билд demo площадки успешно завершён</echo>
+    </target>
+
+    <!-- Конфиг билда для dev площадки -->
+    <target name="build/dev"
+            depends="environment/check,composer,npm,less,environment/init,clear,migrations">
+        <echo>Билд dev площадки успешно завершён</echo>
+    </target>
+
+    <!-- Конфиг для подготовки codecept окружения -->
+    <target name="codecept"
+            if="environment.exists"
+            depends="codecept/frontend">
+        <echo>Билд codecept окружения успешно завершён</echo>
+    </target>
+
+    <!-- Обобщающие таски -->
+    <target name="clear"
+            if="environment.exists"
+            depends="clear/frontend">
+        <echo>Приложения очищены</echo>
+    </target>
+
+    <target name="migrations"
+            if="environment.exists"
+            depends="migrations/frontend">
+        <echo>Миграции выполнены</echo>
+    </target>
+
+    <!-- Таски -->
+    <target name="composer" if="environment.exists">
+        <if>
+            <available type="file" file="../composer.phar"/>
+            <then>
+                <echo>Обновление композера...</echo>
+                <exec command="../composer.phar selfupdate" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="../composer.phar install --prefer-dist" passthru="true"/>
+            </then>
+            <else>
+                <echo>Обновление композера...</echo>
+                <exec command="./getcomposer" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="./composer.phar install --prefer-dist" passthru="true"/>
+            </else>
+        </if>
+    </target>
+
+    <target name="npm" if="environment.exists">
+        <echo>Обновление зависимостей nodejs...</echo>
+        <exec command="npm install" passthru="true"/>
+    </target>
+
+    <target name="less">
+        <echo>Компиляция less стилей...</echo>
+        <exec command="./node_modules/.bin/lessc --source-map-map-inline ${frontend.dir}/_assets/_sources/less/style.less > ${frontend.dir}/_assets/_sources/css/style-raw.css"
+              passthru="true"/>
+        <exec command="./node_modules/.bin/lessc --source-map-map-inline ${frontend.dir}/_assets/_sources/less/bootstrap.less > ${frontend.dir}/_assets/_sources/css/bootstrap-raw.css"
+              passthru="true"/>
+        <exec command="./node_modules/.bin/autoprefixer ${frontend.dir}/_assets/_sources/css/style-raw.css -o ${frontend.dir}/_assets/_sources/css/style.css"
+              passthru="true"/>
+        <exec command="./node_modules/.bin/autoprefixer ${frontend.dir}/_assets/_sources/css/bootstrap-raw.css -o ${frontend.dir}/_assets/_sources/css/bootstrap.css"
+              passthru="true"/>
+        <delete verbose="true">
+            <fileset dir="${frontend.dir}/_assets/_sources/css/">
+                <include name="style-raw.css"/>
+                <include name="bootstrap-raw.css"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="environment/check">
+        <fail unless="environment.exists">
+            Внимание!
+            Необходимо заполнить параметры окружения
+            в файле .environment.php
+            Шаблон в файле .environment.example.php
+        </fail>
+
+        <echo>Файл .environment.php существует</echo>
+    </target>
+
+    <target name="environment/init" if="environment.exists">
+        <echo>Выбор окружения...</echo>
+        <exec command="./init" passthru="true"/>
+    </target>
+
+    <target name="environment/init/production" if="environment.exists">
+        <echo>Выбор окружения...</echo>
+        <exec command="./init --env=Production --force" passthru="true"/>
+    </target>
+
+    <target name="environment/init/demo" if="environment.exists">
+        <echo>Выбор окружения...</echo>
+        <exec command="./init --env=Demo --force" passthru="true"/>
+    </target>
+
+    <target name="migrations/frontend" if="environment.exists">
+        <echo>Применение миграций frontend...</echo>
+        <exec command="./frontend migrate --interactive=0" passthru="true"/>
+    </target>
+
+    <target name="clear/frontend" if="environment.exists">
+        <echo>Очищаем директории runtime, assets и minify в приложении frontend...</echo>
+        <delete verbose="true">
+            <fileset dir="${frontend.dir}/runtime/">
+                <include name="CSS/"/>
+                <include name="debug/"/>
+                <include name="HTML/"/>
+                <include name="URI/"/>
+                <include name="logs/"/>
+            </fileset>
+
+            <fileset dir="${frontend.dir}/web/assets/">
+                <include name="**"/>
+                <exclude name=".gitignore"/>
+            </fileset>
+
+            <fileset dir="${frontend.dir}/web/minify/">
+                <include name="**"/>
+                <exclude name=".gitignore"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="codecept/frontend" if="environment.exists">
+        <if>
+            <not>
+                <available file="${frontend.tests.dir}/acceptance.suite.yml"/>
+            </not>
+            <then>
+                <echo level="info">Копируем config окружения codeception для frontend...</echo>
+                <exec dir="${frontend.tests.dir}" command="cp -i acceptance.suite.yml.dist acceptance.suite.yml"
+                      passthru="true"/>
+                <exec dir="${frontend.tests.dir}" command="cp -i functional.suite.yml.dist functional.suite.yml"
+                      passthru="true"/>
+                <exec dir="${frontend.tests.dir}" command="cp -i unit.suite.yml.dist unit.suite.yml" passthru="true"/>
+            </then>
+        </if>
+
+        <echo level="info">Создаем актёров для запуска тестов frontend...</echo>
+        <exec command="./codecept build -c ${frontend.tests.dir}/codeception.yml" passthru="true"/>
+    </target>
+</project>

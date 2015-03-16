@@ -1,0 +1,23 @@
+include:
+  - 'frontend-app/tests'
+paths:
+    log: _output
+settings:
+    colors: true
+coverage:
+    enabled: true
+    include:
+        - common/authclient/*.php
+        - common/commands/*.php
+        - common/config/*.php
+        - common/helpers/*.php
+        - frontend-app/assets/*.php
+        - frontend-app/commands/*.php
+        - frontend-app/components/*.php
+        - frontend-app/config/*.php
+        - frontend-app/controllers/*.php
+        - frontend-modules/*.php
+        - services/*.php
+        - globals.php
+    exclude:
+        - vendor

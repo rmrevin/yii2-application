@@ -1,0 +1,65 @@
+{
+  "name": "rmrevin/yii2-application",
+  "description": "Yii 2 Advanced Application Template edited by rmrevin",
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Revin Roman",
+      "email": "xgismox@gmail.com",
+      "homepage": "http://phptime.ru"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+
+    "yiisoft/yii2": "~2.0",
+    "yiisoft/yii2-composer": "~2.0",
+    "yiisoft/yii2-bootstrap": "~2.0",
+    "yiisoft/yii2-swiftmailer": "~2.0",
+    "yiisoft/yii2-imagine": "~2.0",
+    "yiisoft/yii2-authclient": "~2.0",
+
+    "rmrevin/yii2-fontawesome": "~2.5",
+    "rmrevin/yii2-minify-view": "~1.5",
+    "rmrevin/yii2-postman": "~2.0"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "~2.0",
+    "yiisoft/yii2-codeception": "~2.0",
+    "yiisoft/yii2-faker": "~2.0",
+    "codeception/codeception": "~2.0",
+    "codeception/phpbuiltinserver": "~1.1",
+    "codeception/specify": "~0.3",
+    "codeception/verify": "~0.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "",
+      "common\\": "common",
+      "frontend\\": "frontend-app",
+      "frontend\\modules\\": "frontend-modules"
+    }
+  },
+  "config": {
+    "process-timeout": 1800
+  },
+  "scripts": {
+    "post-create-project-cmd": [
+      "yii\\composer\\Install::setPermissions"
+    ]
+  },
+  "extra": {
+    "yii-install-writable": [
+      "frontend-app/runtime",
+      "frontend-app/migrations",
+      "frontend-app/web/assets"
+    ],
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}
