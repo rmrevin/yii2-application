@@ -26,6 +26,7 @@ class AppAsset extends \yii\web\AssetBundle
 
     public $depends = [
         \common\_assets\ModernizrAssetBundle::class,
+        \common\_assets\AnimateCssAssetBundle::class,
         \common\_assets\URIAssetBundle::class,
         \common\_assets\SweetAlertAssetBundle::class,
         \common\_assets\jquery\ElasticAssetBundle::class,
