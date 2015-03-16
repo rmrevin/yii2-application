@@ -22,7 +22,7 @@
     "yiisoft/yii2-imagine": "~2.0",
     "yiisoft/yii2-authclient": "~2.0",
 
-    "rmrevin/yii2-fontawesome": "~2.5",
+    "rmrevin/yii2-fontawesome": "~2.8",
     "rmrevin/yii2-minify-view": "~1.5",
     "rmrevin/yii2-postman": "~2.0"
   },
