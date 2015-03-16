@@ -14,7 +14,10 @@ $this->beginPage();
 frontend\_assets\AppAsset::register($this);
 
 ?><!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<?= Html::beginTag('html', [
+    'lang' => Yii::$app->language,
+    'ng-app' => 'YiiApp',
+]) ?>
 <head>
     <?
     echo Html::csrfMetaTags();
