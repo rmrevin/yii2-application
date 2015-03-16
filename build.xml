@@ -74,18 +74,13 @@
 
     <target name="less">
         <echo>Компиляция less стилей...</echo>
-        <exec command="./node_modules/.bin/lessc --source-map-map-inline ${frontend.dir}/_assets/_sources/less/style.less > ${frontend.dir}/_assets/_sources/css/style-raw.css"
+        <exec command="./node_modules/.bin/lessc --source-map-map-inline ${frontend.dir}/_assets/_sources/less/styles.less > ${frontend.dir}/_assets/_sources/css/styles-raw.css"
               passthru="true"/>
-        <exec command="./node_modules/.bin/lessc --source-map-map-inline ${frontend.dir}/_assets/_sources/less/bootstrap.less > ${frontend.dir}/_assets/_sources/css/bootstrap-raw.css"
-              passthru="true"/>
-        <exec command="./node_modules/.bin/autoprefixer ${frontend.dir}/_assets/_sources/css/style-raw.css -o ${frontend.dir}/_assets/_sources/css/style.css"
-              passthru="true"/>
-        <exec command="./node_modules/.bin/autoprefixer ${frontend.dir}/_assets/_sources/css/bootstrap-raw.css -o ${frontend.dir}/_assets/_sources/css/bootstrap.css"
+        <exec command="./node_modules/.bin/autoprefixer ${frontend.dir}/_assets/_sources/css/styles-raw.css -o ${frontend.dir}/_assets/_sources/css/styles.css"
               passthru="true"/>
         <delete verbose="true">
             <fileset dir="${frontend.dir}/_assets/_sources/css/">
-                <include name="style-raw.css"/>
-                <include name="bootstrap-raw.css"/>
+                <include name="styles-raw.css"/>
             </fileset>
         </delete>
     </target>
