@@ -15,7 +15,7 @@ class AnimateCssAssetBundle extends \yii\web\AssetBundle
 
     public $sourcePath = '@bower';
 
-    public $js = [
+    public $css = [
         'animate.css/animate.min.css',
     ];
 }
