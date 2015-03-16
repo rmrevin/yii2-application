@@ -29,6 +29,7 @@ class AppAsset extends \yii\web\AssetBundle
         \common\_assets\AnimateCssAssetBundle::class,
         \common\_assets\URIAssetBundle::class,
         \common\_assets\SweetAlertAssetBundle::class,
+        \common\_assets\AngularAssetBundle::class,
         \common\_assets\jquery\ElasticAssetBundle::class,
         \common\_assets\jquery\Select2AssetBundle::class,
         \common\_assets\jquery\GritterAssetBundle::class,
