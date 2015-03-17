@@ -31,7 +31,9 @@ return [
     'language' => 'ru_RU',
     'sourceLanguage' => 'ru_RU',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'blank' => frontend\modules\Blank\Module::class,
+    ],
     'components' => [
         'db' => $component_db,
         'db.test' => $component_db_test,
