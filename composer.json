@@ -24,6 +24,7 @@
 
     "rmrevin/yii2-fontawesome": "~2.8",
     "rmrevin/yii2-minify-view": "~1.5",
+    "rmrevin/yii2-rbac-migration": "~1.1",
     "rmrevin/yii2-postman": "~2.0"
   },
   "require-dev": {
