@@ -31,7 +31,7 @@ class Response extends \yii\db\ActiveRecord
             [['client', 'response', 'result'], 'string'],
 
             /** semantic validators */
-            [['received_at', 'client', 'response', 'result', 'user_ip'], 'required'],
+            [['client', 'response', 'result'], 'required'],
 
             /** default values */
             [['received_at'], 'default', 'value' => time()],
