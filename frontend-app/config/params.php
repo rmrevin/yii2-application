@@ -7,13 +7,8 @@
 return [
     'component.i18n' => [
         'translations' => [
-            'catalog' => common\components\RussianMessageSource::class,
             'account' => common\components\RussianMessageSource::class,
-            'landing' => common\components\RussianMessageSource::class,
-            'portfolio' => common\components\RussianMessageSource::class,
-            'like' => common\components\RussianMessageSource::class,
-            'service-activity' => common\components\RussianMessageSource::class,
-            'service-file' => common\components\RussianMessageSource::class,
+            'blank' => common\components\RussianMessageSource::class,
         ],
     ],
     'component.user' => [
