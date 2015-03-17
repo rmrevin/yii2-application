@@ -93,40 +93,40 @@ class SignController extends Account\components\Controller
 
         switch ($Client->getId()) {
             case 'facebook':
-                $UserQuery->byFacebookId($Client->getId());
+                $UserQuery->byFacebookId($attributes['id']);
                 break;
             case 'github':
-                $UserQuery->byGithubId($Client->getId());
+                $UserQuery->byGithubId($attributes['id']);
                 break;
             case 'google':
 //                 @todo implement google support
                 throw new \yii\base\NotSupportedException;
 
-//                $UserQuery->byGoogleId($Client->getId());
+//                $UserQuery->byGoogleId($attributes['id']);
                 break;
             case 'linkedin':
 //                 @todo implement linkedin support
                 throw new \yii\base\NotSupportedException;
 
-//                $UserQuery->byLinkedinId($Client->getId());
+//                $UserQuery->byLinkedinId($attributes['id']);
                 break;
             case 'live':
 //                 @todo implement live support
                 throw new \yii\base\NotSupportedException;
 
-//                $UserQuery->byLiveId($Client->getId());
+//                $UserQuery->byLiveId($attributes['id']);
                 break;
             case 'twitter':
-                $UserQuery->byTwitterId($Client->getId());
+                $UserQuery->byTwitterId($attributes['id']);
                 break;
             case 'vkontakte':
-                $UserQuery->byVkontakteId($Client->getId());
+                $UserQuery->byVkontakteId($attributes['id']);
                 break;
             case 'yandex':
 //                @todo implement yandex support
                 throw new \yii\base\NotSupportedException;
 
-//                $UserQuery->byYandexId($Client->getId());
+//                $UserQuery->byYandexId($attributes['id']);
                 break;
         }
 

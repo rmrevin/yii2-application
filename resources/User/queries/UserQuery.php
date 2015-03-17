@@ -42,7 +42,7 @@ class UserQuery extends \yii\db\ActiveQuery
         if (empty($Social)) {
             return $this->andWhere('1=0');
         } else {
-            $this->byId($Social->social_id);
+            $this->byId($Social->user_id);
         }
 
         return $this;
