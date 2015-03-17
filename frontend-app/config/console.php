@@ -35,6 +35,7 @@ return [
     'components' => [
         'db' => $params['component.db']['frontend'],
         'db.test' => $params['component.db']['frontend.test'],
+        'cache' => $params['component.cache'],
         'security' => $params['component.security'],
         'user' => $params['component.user'],
         'authManager' => $params['component.authManager'],
