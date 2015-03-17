@@ -4,11 +4,11 @@
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models;
+namespace resources\User\Auth;
 
 /**
  * Class AuthResponse
- * @package frontend\modules\Account\models
+ * @package resources\User\Auth
  *
  * @property integer $id
  * @property integer $received_at
@@ -17,7 +17,7 @@ namespace frontend\modules\Account\models;
  * @property string $result
  * @property string $user_ip
  */
-class AuthResponse extends \yii\db\ActiveRecord
+class Response extends \yii\db\ActiveRecord
 {
 
     /**
@@ -40,11 +40,11 @@ class AuthResponse extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return queries\AuthResponseQuery|\yii\db\ActiveQuery|\yii\db\ActiveQueryInterface
+     * @return \resources\User\queries\UserAuthResponseQuery
      */
     public static function find()
     {
-        return new queries\AuthResponseQuery(get_called_class());
+        return new \resources\User\queries\UserAuthResponseQuery(get_called_class());
     }
 
     /**
@@ -52,6 +52,6 @@ class AuthResponse extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%account_auth_response}}';
+        return '{{%auth_auth_response}}';
     }
 }

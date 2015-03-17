@@ -1,16 +1,16 @@
 <?php
 /**
- * UserFacebookQuery.php
+ * UserLiveQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserFacebookQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserLiveQuery
+ * @package resources\User\queries
  */
-class UserFacebookQuery extends \yii\db\ActiveQuery
+class UserLiveQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**

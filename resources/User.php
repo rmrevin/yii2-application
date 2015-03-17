@@ -4,16 +4,13 @@
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models;
-
-use frontend\modules\Account;
+namespace resources;
 
 /**
  * Class User
- * @package frontend\modules\Account\models
+ * @package resources
  *
  * @property integer $id
- * @property integer $github_id
  * @property string $login
  * @property string $name
  * @property string $email
@@ -23,15 +20,14 @@ use frontend\modules\Account;
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $logged_at
  *
- * @method queries\UserQuery hasMany($class, $link)
- * @method queries\UserQuery hasOne($class, $link)
+ * @method User\queries\UserQuery hasMany($class, $link)
+ * @method User\queries\UserQuery hasOne($class, $link)
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
-    use Account\models\traits\UserAvailableTrait;
+    use User\traits\UserAvailableTrait;
 
     /** @var array */
     private $_access = [];
@@ -63,13 +59,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             /** type validators */
-            [['github_id'], 'integer'],
             [['name', 'login', 'avatar'], 'string', 'length' => [1, 255]],
             [['email'], 'email'],
             [['deleted'], 'boolean'],
 
             /** semantic validators */
-            [['github_id', 'name', 'login'], 'required'],
+            [['name', 'login'], 'required'],
             [['name', 'login', 'email', 'avatar'], 'filter', 'filter' => 'str_clean'],
             [['deleted'], 'in', 'range' => [self::NOT_DELETED, self::DELETED]],
 
@@ -179,7 +174,24 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ];
                 break;
             case 'vkontakte':
-                throw new \yii\base\NotSupportedException;
+                $name = null;
+                if (isset($attributes['last_name']) && !empty($attributes['last_name'])) {
+                    $name = $attributes['last_name'] . ' ';
+                }
+                if (isset($attributes['first_name']) && !empty($attributes['first_name'])) {
+                    $name .= $attributes['first_name'];
+                }
+
+                $avatar = null;
+                if (isset($attributes['photo']) && !empty($attributes['photo'])) {
+                    $avatar = $attributes['photo'];
+                }
+
+                $attributes = [
+                    'login' => $attributes['screen_name'],
+                    'name' => trim($name),
+                    'avatar' => $avatar,
+                ];
                 break;
             case 'yandex':
                 throw new \yii\base\NotSupportedException;
@@ -204,28 +216,28 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $Auth = null;
                 break;
             case 'facebook':
-                $Auth = new \frontend\modules\Account\models\User\Facebook(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Facebook(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'github':
-                $Auth = new \frontend\modules\Account\models\User\Github(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Github(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'google':
-                $Auth = new \frontend\modules\Account\models\User\Google(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Google(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'linkedin':
-                $Auth = new \frontend\modules\Account\models\User\Linkedin(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Linkedin(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'live':
-                $Auth = new \frontend\modules\Account\models\User\Live(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Live(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'twitter':
-                $Auth = new \frontend\modules\Account\models\User\Twitter(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Twitter(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'vkontakte':
-                $Auth = new \frontend\modules\Account\models\User\Vkontakte(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Vkontakte(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
             case 'yandex':
-                $Auth = new \frontend\modules\Account\models\User\Yandex(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                $Auth = new \resources\User\Auth\Yandex(['user_id' => $this->id, 'social_id' => $attributes['id']]);
                 break;
         }
 
@@ -298,11 +310,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * @return queries\UserQuery|\yii\db\ActiveQuery|\yii\db\ActiveQueryInterface
+     * @return \resources\User\queries\UserQuery
      */
     public static function find()
     {
-        return new queries\UserQuery(get_called_class());
+        return new \resources\User\queries\UserQuery(get_called_class());
     }
 
     /**
@@ -310,7 +322,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%account_user}}';
+        return '{{%user}}';
     }
 
     /**
@@ -319,9 +331,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function getAllRoles()
     {
         return [
-            User::ROLE_ADMIN => \Yii::t('app', 'Administrator'),
-            User::ROLE_MANAGER => \Yii::t('app', 'Manager'),
-            User::ROLE_USER => \Yii::t('app', 'User'),
+            User::ROLE_ADMIN => \Yii::t('user', 'Администратор'),
+            User::ROLE_MANAGER => \Yii::t('user', 'Менеджер'),
+            User::ROLE_USER => \Yii::t('user', 'Пользователь'),
         ];
     }
 

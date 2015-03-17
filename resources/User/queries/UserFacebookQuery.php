@@ -1,16 +1,16 @@
 <?php
 /**
- * UserGoogleQuery.php
+ * UserFacebookQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserGoogleQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserFacebookQuery
+ * @package resources\User\queries
  */
-class UserGoogleQuery extends \yii\db\ActiveQuery
+class UserFacebookQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**

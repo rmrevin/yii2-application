@@ -1,16 +1,16 @@
 <?php
 /**
- * UserLinkedinQuery.php
+ * UserYandexQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserLinkedinQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserYandexQuery
+ * @package resources\User\queries
  */
-class UserLinkedinQuery extends \yii\db\ActiveQuery
+class UserYandexQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**

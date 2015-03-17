@@ -1,16 +1,16 @@
 <?php
 /**
- * UserVkontakteQuery.php
+ * UserGithubQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserVkontakteQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserGithubQuery
+ * @package resources\User\queries
  */
-class UserVkontakteQuery extends \yii\db\ActiveQuery
+class UserGithubQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**

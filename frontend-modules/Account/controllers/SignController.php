@@ -28,6 +28,11 @@ class SignController extends Account\components\Controller
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => ['in'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
                         'actions' => ['auth'],
                         'roles' => ['?', '@'],
                     ],
@@ -55,6 +60,14 @@ class SignController extends Account\components\Controller
     }
 
     /**
+     * @return string
+     */
+    public function actionIn()
+    {
+        return $this->render('in');
+    }
+
+    /**
      * @return \yii\web\Response
      */
     public function actionOut()
@@ -70,14 +83,14 @@ class SignController extends Account\components\Controller
      */
     public function authSuccessCallback(\yii\authclient\ClientInterface $Client)
     {
-        $AuthResponse = new Account\models\AuthResponse;
+        $AuthResponse = new \resources\User\Auth\Response;
 
         $attributes = $Client->getUserAttributes();
         $AuthResponse->response = Json::encode($attributes);
 
-        $UserQuery = Account\models\User::find();
+        $UserQuery = \resources\User::find();
 
-        switch ($Client->getName()) {
+        switch ($Client->getId()) {
             case 'facebook':
                 $UserQuery->byFacebookId($Client->getId());
                 break;
@@ -106,10 +119,7 @@ class SignController extends Account\components\Controller
                 $UserQuery->byTwitterId($Client->getId());
                 break;
             case 'vkontakte':
-//                @todo implement vkontakte support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byVkontakteId($Client->getId());
+                $UserQuery->byVkontakteId($Client->getId());
                 break;
             case 'yandex':
 //                @todo implement yandex support
@@ -119,10 +129,10 @@ class SignController extends Account\components\Controller
                 break;
         }
 
-        /** @var Account\models\User $User */
+        /** @var \resources\User $User */
         $User = $UserQuery->one();
 
-        if ($User instanceof Account\models\User) {
+        if ($User instanceof \resources\User) {
             $User->appendClientAttributes($Client);
 
             if ($User->save()) {
@@ -131,13 +141,15 @@ class SignController extends Account\components\Controller
                 $AuthResponse->result = Json::encode($User->getErrors());
             }
         } else {
-            $User = new Account\models\User();
+            $User = new \resources\User();
             $User->appendClientAttributes($Client);
 
             if ($User->save()) {
+                $User->createSocialLink($Client);
+
                 $AuthResponse->result = Json::encode($User->id);
 
-                AuthManager()->assign(RbacFactory::Role(Account\models\User::ROLE_USER), $User->id);
+                AuthManager()->assign(RbacFactory::Role(\resources\User::ROLE_USER), $User->id);
             } else {
                 $AuthResponse->result = Json::encode($User->getErrors());
             }
@@ -145,7 +157,7 @@ class SignController extends Account\components\Controller
 
         $AuthResponse->save();
 
-        if ($User instanceof Account\models\User && !$User->isNewRecord) {
+        if ($User instanceof \resources\User && !$User->isNewRecord) {
             $User->save();
 
             User()->login($User, 86400);

@@ -40,6 +40,7 @@
     "psr-4": {
       "": "",
       "common\\": "common",
+      "resources\\": "resources",
       "frontend\\": "frontend-app",
       "frontend\\modules\\": "frontend-modules"
     }

@@ -4,13 +4,11 @@
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
-
-use frontend\modules\Account;
+namespace resources\User\queries;
 
 /**
  * Class UserQuery
- * @package frontend\modules\Account\models\queries
+ * @package resources\User\queries
  */
 class UserQuery extends \yii\db\ActiveQuery
 {
@@ -33,12 +31,15 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function bySocialId($class, $social_id)
     {
-        /** @var \yii\db\ActiveRecord $Facebook */
-        $Social = $class::find()
+        /** @var AbstractSocialQueryInterface $SocialQuery */
+        $SocialQuery = $class::find();
+
+        /** @var \resources\User\Auth\AbstractSocial $Social */
+        $Social = $SocialQuery
             ->bySocialId($social_id)
             ->one();
 
-        if (empty($VK)) {
+        if (empty($Social)) {
             return $this->andWhere('1=0');
         } else {
             $this->byId($Social->social_id);
@@ -53,7 +54,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byFacebookId($Facebook_id)
     {
-        return $this->bySocialId(Account\models\User\Facebook::class, $Facebook_id);
+        return $this->bySocialId(\resources\User\Auth\Facebook::class, $Facebook_id);
     }
 
     /**
@@ -62,7 +63,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byGithubId($Github_id)
     {
-        return $this->bySocialId(Account\models\User\Github::class, $Github_id);
+        return $this->bySocialId(\resources\User\Auth\Github::class, $Github_id);
     }
 
     /**
@@ -71,7 +72,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byGoogleId($Google_id)
     {
-        return $this->bySocialId(Account\models\User\Google::class, $Google_id);
+        return $this->bySocialId(\resources\User\Auth\Google::class, $Google_id);
     }
 
     /**
@@ -80,7 +81,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byLinkedinId($Linkedin_id)
     {
-        return $this->bySocialId(Account\models\User\Linkedin::class, $Linkedin_id);
+        return $this->bySocialId(\resources\User\Auth\Linkedin::class, $Linkedin_id);
     }
 
     /**
@@ -89,7 +90,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byLiveId($Live_id)
     {
-        return $this->bySocialId(Account\models\User\Live::class, $Live_id);
+        return $this->bySocialId(\resources\User\Auth\Live::class, $Live_id);
     }
 
     /**
@@ -98,7 +99,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byTwitterId($Twitter_id)
     {
-        return $this->bySocialId(Account\models\User\Twitter::class, $Twitter_id);
+        return $this->bySocialId(\resources\User\Auth\Twitter::class, $Twitter_id);
     }
 
 
@@ -108,7 +109,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byVkontakteId($Vkontakte_id)
     {
-        return $this->bySocialId(Account\models\User\Vkontakte::class, $Vkontakte_id);
+        return $this->bySocialId(\resources\User\Auth\Vkontakte::class, $Vkontakte_id);
     }
 
     /**
@@ -117,7 +118,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function byYandexId($Yandex_id)
     {
-        return $this->bySocialId(Account\models\User\Yandex::class, $Yandex_id);
+        return $this->bySocialId(\resources\User\Auth\Yandex::class, $Yandex_id);
     }
 
     /**
@@ -169,7 +170,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function onlyNotDeleted()
     {
-        $this->andWhere(['deleted' => Account\models\User::NOT_DELETED]);
+        $this->andWhere(['deleted' => \resources\User::NOT_DELETED]);
 
         return $this;
     }

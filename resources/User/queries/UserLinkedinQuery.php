@@ -1,16 +1,16 @@
 <?php
 /**
- * UserLiveQuery.php
+ * UserLinkedinQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserLiveQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserLinkedinQuery
+ * @package resources\User\queries
  */
-class UserLiveQuery extends \yii\db\ActiveQuery
+class UserLinkedinQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**

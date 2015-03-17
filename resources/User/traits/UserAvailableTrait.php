@@ -4,13 +4,11 @@
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\traits;
-
-use frontend\modules\Account;
+namespace resources\User\traits;
 
 /**
  * Class UserAvailableTrait
- * @package frontend\modules\Account\models\traits
+ * @package resources\User\traits
  *
  * @property integer $deleted
  *
@@ -29,9 +27,9 @@ trait UserAvailableTrait
         if ($result === true) {
             switch ($this->deleted) {
                 default:
-                case Account\models\User::NOT_DELETED:
+                case \resources\User::NOT_DELETED:
                     break;
-                case Account\models\User::DELETED:
+                case \resources\User::DELETED:
                     $result = 'deleted';
                     break;
             }
@@ -45,7 +43,7 @@ trait UserAvailableTrait
      */
     public function isDeleted()
     {
-        return $this->deleted === Account\models\User::DELETED;
+        return $this->deleted === \resources\User::DELETED;
     }
 
     /**
@@ -53,7 +51,7 @@ trait UserAvailableTrait
      */
     public function isNotDeleted()
     {
-        return $this->deleted === Account\models\User::NOT_DELETED;
+        return $this->deleted === \resources\User::NOT_DELETED;
     }
 
     /**
@@ -62,7 +60,7 @@ trait UserAvailableTrait
      */
     public function delete()
     {
-        $this->deleted = Account\models\User::DELETED;
+        $this->deleted = \resources\User::DELETED;
 
         return $this->update(false, ['deleted']) === 1;
     }
@@ -73,7 +71,7 @@ trait UserAvailableTrait
      */
     public function restore()
     {
-        $this->deleted = Account\models\User::NOT_DELETED;
+        $this->deleted = \resources\User::NOT_DELETED;
 
         return $this->update(false, ['deleted']) === 1;
     }

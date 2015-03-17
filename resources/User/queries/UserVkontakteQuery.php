@@ -1,16 +1,16 @@
 <?php
 /**
- * UserYandexQuery.php
+ * UserVkontakteQuery.php
  * @author Revin Roman http://phptime.ru
  */
 
-namespace frontend\modules\Account\models\queries;
+namespace resources\User\queries;
 
 /**
- * Class UserYandexQuery
- * @package frontend\modules\Account\models\queries
+ * Class UserVkontakteQuery
+ * @package resources\User\queries
  */
-class UserYandexQuery extends \yii\db\ActiveQuery
+class UserVkontakteQuery extends \yii\db\ActiveQuery implements AbstractSocialQueryInterface
 {
 
     /**
