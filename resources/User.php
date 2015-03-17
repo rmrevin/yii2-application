@@ -284,9 +284,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::find()
-            ->byToken(XXTEA()->decrypt($token))
-            ->one();
+        throw new \yii\base\NotSupportedException;
     }
 
     /**
