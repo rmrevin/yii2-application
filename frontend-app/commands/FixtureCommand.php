@@ -1,16 +1,16 @@
 <?php
 /**
- * FixtureController.php
+ * FixtureCommand.php
  * @author Revin Roman http://phptime.ru
  */
 
 namespace frontend\commands;
 
 /**
- * Class FixtureController
+ * Class FixtureCommand
  * @package frontend\commands
  */
-class FixtureController extends \common\commands\FixtureController
+class FixtureCommand extends \common\commands\FixtureCommand
 {
 
     /**

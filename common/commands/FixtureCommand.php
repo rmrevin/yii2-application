@@ -1,6 +1,6 @@
 <?php
 /**
- * FixtureController.php
+ * FixtureCommand.php
  * @author Revin Roman http://phptime.ru
  */
 
@@ -11,10 +11,10 @@ use yii\helpers\Console;
 use yii\helpers\FileHelper;
 
 /**
- * Class FixtureController
+ * Class FixtureCommand
  * @package common\commands
  */
-class FixtureController extends \yii\faker\FixtureController
+class FixtureCommand extends \yii\faker\FixtureController
 {
 
     /**

@@ -22,7 +22,8 @@ return [
     'aliases' => ['@tests' => '@frontend/tests'],
     'controllerNamespace' => 'frontend\commands',
     'controllerMap' => [
-        'fixture' => frontend\commands\FixtureController::class,
+        'fixture' => frontend\commands\FixtureCommand::class,
+        'user' => frontend\commands\UserCommand::class,
         'migrate' => [
             'class' => yii\console\controllers\MigrateController::class,
             'templateFile' => '@common/views/migration.php',
