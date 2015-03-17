@@ -52,6 +52,6 @@ class Response extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%auth_auth_response}}';
+        return '{{%user_auth_response}}';
     }
 }
