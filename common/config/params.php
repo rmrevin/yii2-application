@@ -105,4 +105,49 @@ return [
         'timeFormat' => 'HH:mm',
         'datetimeFormat' => 'dd MMMM y HH:mm',
     ],
+    'component.authClientCollection' => [
+        'class' => yii\authclient\Collection::class,
+        'clients' => [
+            'facebook' => [
+                'class' => yii\authclient\clients\Facebook::class,
+                'clientId' => FACEBOOK_CLIENT_ID,
+                'clientSecret' => FACEBOOK_CLIENT_SECRET,
+            ],
+            'github' => [
+                'class' => yii\authclient\clients\GitHub::class,
+                'clientId' => GITHUB_CLIENT_ID,
+                'clientSecret' => GITHUB_CLIENT_SECRET,
+            ],
+            'google' => [
+                'class' => yii\authclient\clients\GoogleOAuth::class,
+                'clientId' => GOOGLE_CLIENT_ID,
+                'clientSecret' => GOOGLE_CLIENT_SECRET,
+            ],
+            'linkedin' => [
+                'class' => yii\authclient\clients\LinkedIn::class,
+                'clientId' => LINKEDIN_CLIENT_ID,
+                'clientSecret' => LINKEDIN_CLIENT_SECRET,
+            ],
+            'live' => [
+                'class' => yii\authclient\clients\Live::class,
+                'clientId' => LIVE_CLIENT_ID,
+                'clientSecret' => LIVE_CLIENT_SECRET,
+            ],
+            'twitter' => [
+                'class' => yii\authclient\clients\Twitter::class,
+                'consumerKey' => TWITTER_CLIENT_ID,
+                'consumerSecret' => TWITTER_CLIENT_SECRET,
+            ],
+            'vkontakte' => [
+                'class' => yii\authclient\clients\VKontakte::class,
+                'clientId' => VKONTAKTE_CLIENT_ID,
+                'clientSecret' => VKONTAKTE_CLIENT_SECRET,
+            ],
+            'yandex' => [
+                'class' => yii\authclient\clients\YandexOAuth::class,
+                'clientId' => YANDEX_CLIENT_ID,
+                'clientSecret' => YANDEX_CLIENT_SECRET,
+            ],
+        ],
+    ],
 ];
