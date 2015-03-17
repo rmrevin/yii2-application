@@ -23,14 +23,22 @@ use yii\helpers\Html;
         ]);
         echo Html::tag('label', \Yii::t('account', 'Войти через'));
         echo Html::beginTag('ul', ['class' => 'auth-clients']);
-        foreach ($authAuthChoice->getClients() as $client) {
-            $icon = $client->getName();
+        foreach ($authAuthChoice->getClients() as $Client) {
+            $icon = $Client->getName();
+            if ($icon === 'live') {
+                $icon = 'windows';
+            }
             if ($icon === 'vkontakte') {
                 $icon = 'vk';
             }
+            if ($icon === 'yandex') {
+                $icon = 'yahoo';
+            }
 
             echo Html::beginTag('li');
-            $authAuthChoice->clientLink($client, FA::icon($icon));
+            $authAuthChoice->clientLink($Client, FA::icon($icon), [
+                'title' => $Client->getTitle(),
+            ]);
             echo Html::endTag('li');
         }
         echo Html::endTag('ul');
