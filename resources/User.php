@@ -172,10 +172,52 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ];
                 break;
             case 'linkedin':
-                throw new \yii\base\NotSupportedException;
+                $name = null;
+                if (isset($attributes['last_name']) && !empty($attributes['last_name'])) {
+                    $name = $attributes['last_name'] . ' ';
+                }
+                if (isset($attributes['first_name']) && !empty($attributes['first_name'])) {
+                    $name .= $attributes['first_name'];
+                }
+
+                $email = null;
+                if (isset($attributes['email']) && !empty($attributes['email'])) {
+                    $email = $attributes['email'];
+                }
+
+                $attributes = [
+                    'login' => $email,
+                    'name' => $name,
+                    'email' => $email,
+                ];
                 break;
             case 'live':
-                throw new \yii\base\NotSupportedException;
+                $name = null;
+                if (isset($attributes['last_name']) && !empty($attributes['last_name'])) {
+                    $name = $attributes['last_name'] . ' ';
+                }
+                if (isset($attributes['first_name']) && !empty($attributes['first_name'])) {
+                    $name .= $attributes['first_name'];
+                }
+
+                $email = null;
+                if (isset($attributes['emails']) && !empty($attributes['emails'])) {
+                    if (isset($attributes['emails']['business']) && !empty($attributes['emails']['business'])) {
+                        $email = $attributes['emails']['business'];
+                    }
+                    if (isset($attributes['emails']['account']) && !empty($attributes['emails']['account'])) {
+                        $email = $attributes['emails']['account'];
+                    }
+                    if (isset($attributes['emails']['personal']) && !empty($attributes['emails']['personal'])) {
+                        $email = $attributes['emails']['personal'];
+                    }
+                }
+
+                $attributes = [
+                    'login' => $email,
+                    'name' => trim($name),
+                    'email' => $email,
+                ];
                 break;
             case 'twitter':
                 $name = null;

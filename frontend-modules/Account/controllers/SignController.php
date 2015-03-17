@@ -102,16 +102,10 @@ class SignController extends Account\components\Controller
                 $UserQuery->byGoogleId($attributes['id']);
                 break;
             case 'linkedin':
-//                 @todo implement linkedin support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byLinkedinId($attributes['id']);
+                $UserQuery->byLinkedinId($attributes['id']);
                 break;
             case 'live':
-//                 @todo implement live support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byLiveId($attributes['id']);
+                $UserQuery->byLiveId($attributes['id']);
                 break;
             case 'twitter':
                 $UserQuery->byTwitterId($attributes['id']);
