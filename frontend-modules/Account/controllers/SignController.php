@@ -28,12 +28,7 @@ class SignController extends Account\components\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['in'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['auth'],
+                        'actions' => ['in', 'auth'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -64,6 +59,12 @@ class SignController extends Account\components\Controller
      */
     public function actionIn()
     {
+        if (!User()->isGuest) {
+            return $this->redirect(['/order/list/index']);
+        }
+
+        $this->layout = '//wide';
+
         return $this->render('in');
     }
 
