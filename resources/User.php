@@ -194,7 +194,30 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ];
                 break;
             case 'yandex':
-                throw new \yii\base\NotSupportedException;
+                $name = null;
+                if (isset($attributes['last_name']) && !empty($attributes['last_name'])) {
+                    $name = $attributes['last_name'] . ' ';
+                }
+                if (isset($attributes['first_name']) && !empty($attributes['first_name'])) {
+                    $name .= $attributes['first_name'];
+                }
+                if (isset($attributes['real_name']) && !empty($attributes['real_name'])) {
+                    $name = $attributes['real_name'];
+                }
+
+                $email = null;
+                if (isset($attributes['default_email']) && !empty($attributes['default_email'])) {
+                    $email = $attributes['default_email'];
+                }
+
+                $avatar = null;
+                // @todo implement yandex avatar $attributes['default_avatar_id']
+
+                $attributes = [
+                    'login' => $attributes['login'],
+                    'name' => trim($name),
+                    'email' => $email,
+                ];
                 break;
         }
 

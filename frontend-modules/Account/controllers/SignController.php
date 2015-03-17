@@ -123,10 +123,7 @@ class SignController extends Account\components\Controller
                 $UserQuery->byVkontakteId($attributes['id']);
                 break;
             case 'yandex':
-//                @todo implement yandex support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byYandexId($attributes['id']);
+                $UserQuery->byYandexId($attributes['id']);
                 break;
         }
 
