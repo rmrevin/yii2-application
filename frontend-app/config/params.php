@@ -18,7 +18,7 @@ return [
     ],
     'component.user' => [
         'class' => yii\web\User::class,
-//        'identityClass' => frontend\models\User::class,
+        'identityClass' => frontend\modules\Account\models\User::class,
         'enableAutoLogin' => true,
         'loginUrl' => ['/account/sign/in'],
     ],
