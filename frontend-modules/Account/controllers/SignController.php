@@ -84,6 +84,7 @@ class SignController extends Account\components\Controller
     public function authSuccessCallback(\yii\authclient\ClientInterface $Client)
     {
         $AuthResponse = new \resources\User\Auth\Response;
+        $AuthResponse->client = $Client->getId();
 
         $attributes = $Client->getUserAttributes();
         $AuthResponse->response = Json::encode($attributes);
