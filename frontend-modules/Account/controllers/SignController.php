@@ -99,10 +99,7 @@ class SignController extends Account\components\Controller
                 $UserQuery->byGithubId($attributes['id']);
                 break;
             case 'google':
-//                 @todo implement google support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byGoogleId($attributes['id']);
+                $UserQuery->byGoogleId($attributes['id']);
                 break;
             case 'linkedin':
 //                 @todo implement linkedin support

@@ -99,6 +99,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function appendClientAttributes(\yii\authclient\ClientInterface $Client)
     {
         $attributes = $Client->getUserAttributes();
+//        dump($attributes);die();
 
         switch ($Client->getId()) {
             default:
@@ -145,7 +146,30 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ];
                 break;
             case 'google':
-                throw new \yii\base\NotSupportedException;
+                $name = $attributes['displayName'];
+                if (isset($attributes['name']['familyName']) && !empty($attributes['name']['familyName'])) {
+                    $name = $attributes['name']['familyName'] . ' ';
+                    if (isset($attributes['name']['givenName']) && !empty($attributes['name']['givenName'])) {
+                        $name .= $attributes['name']['givenName'];
+                    }
+                }
+
+                $email = null;
+                if (isset($attributes['emails']) && !empty($attributes['emails'])) {
+                    $email = array_shift($attributes['emails'])['value'];
+                }
+
+                $avatar = null;
+                if (isset($attributes['image']) && !empty($attributes['image'])) {
+                    $avatar = $attributes['image']['url'];
+                }
+
+                $attributes = [
+                    'login' => empty($email) ? ('google-' . $attributes['id']) : $email,
+                    'name' => trim($name),
+                    'email' => $email,
+                    'avatar' => $avatar,
+                ];
                 break;
             case 'linkedin':
                 throw new \yii\base\NotSupportedException;
@@ -221,6 +245,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 break;
         }
 
+//        dump($attributes);die();
         if (!empty($attributes)) {
             $this->setAttributes($attributes);
         }
