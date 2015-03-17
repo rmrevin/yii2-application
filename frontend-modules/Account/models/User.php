@@ -105,15 +105,25 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $attributes = $Client->getUserAttributes();
 
-        switch ($Client->getName()) {
+        switch ($Client->getId()) {
             default:
                 $attributes = null;
                 break;
             case 'facebook':
+                $name = null;
+                if (isset($attributes['name']) && !empty($attributes['name'])) {
+                    $name = $attributes['name'];
+                }
+
+                $email = null;
+                if (isset($attributes['email']) && !empty($attributes['email'])) {
+                    $email = $attributes['email'];
+                }
+
                 $attributes = [
-                    'login' => $attributes['email'],
-                    'name' => $attributes['name'],
-                    'email' => $attributes['email'],
+                    'login' => $email,
+                    'name' => $name,
+                    'email' => $email,
                 ];
                 break;
             case 'github':
@@ -149,7 +159,24 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 throw new \yii\base\NotSupportedException;
                 break;
             case 'twitter':
-                throw new \yii\base\NotSupportedException;
+                $name = null;
+                if (isset($attributes['name']) && !empty($attributes['name'])) {
+                    $name = $attributes['name'];
+                }
+
+                $avatar = null;
+                if (isset($attributes['profile_image_url']) && !empty($attributes['profile_image_url'])) {
+                    $avatar = $attributes['profile_image_url'];
+                }
+                if (isset($attributes['profile_image_url_https']) && !empty($attributes['profile_image_url_https'])) {
+                    $avatar = $attributes['profile_image_url_https'];
+                }
+
+                $attributes = [
+                    'login' => $attributes['screen_name'],
+                    'name' => $name,
+                    'avatar' => $avatar,
+                ];
                 break;
             case 'vkontakte':
                 throw new \yii\base\NotSupportedException;
@@ -162,6 +189,49 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         if (!empty($attributes)) {
             $this->setAttributes($attributes);
         }
+    }
+
+    /**
+     * @param \yii\authclient\ClientInterface $Client
+     * @return bool
+     */
+    public function createSocialLink(\yii\authclient\ClientInterface $Client)
+    {
+        $attributes = $Client->getUserAttributes();
+
+        switch ($Client->getId()) {
+            default:
+                $Auth = null;
+                break;
+            case 'facebook':
+                $Auth = new \frontend\modules\Account\models\User\Facebook(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'github':
+                $Auth = new \frontend\modules\Account\models\User\Github(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'google':
+                $Auth = new \frontend\modules\Account\models\User\Google(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'linkedin':
+                $Auth = new \frontend\modules\Account\models\User\Linkedin(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'live':
+                $Auth = new \frontend\modules\Account\models\User\Live(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'twitter':
+                $Auth = new \frontend\modules\Account\models\User\Twitter(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'vkontakte':
+                $Auth = new \frontend\modules\Account\models\User\Vkontakte(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+            case 'yandex':
+                $Auth = new \frontend\modules\Account\models\User\Yandex(['user_id' => $this->id, 'social_id' => $attributes['id']]);
+                break;
+        }
+
+        $Auth->save();
+
+        return $Auth;
     }
 
     /**
