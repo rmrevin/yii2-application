@@ -123,13 +123,7 @@ class SignController extends Account\components\Controller
         $User = $UserQuery->one();
 
         if ($User instanceof \resources\User) {
-            $User->appendClientAttributes($Client);
-
-            if ($User->save()) {
-                $AuthResponse->result = Json::encode($User->id);
-            } else {
-                $AuthResponse->result = Json::encode($User->getErrors());
-            }
+            $AuthResponse->result = Json::encode($User->id);
         } else {
             $User = new \resources\User();
             $User->appendClientAttributes($Client);
