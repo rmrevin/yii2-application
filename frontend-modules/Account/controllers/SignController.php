@@ -103,10 +103,7 @@ class SignController extends Account\components\Controller
 //                $UserQuery->byLiveId($Client->getId());
                 break;
             case 'twitter':
-//                 @todo implement twitter support
-                throw new \yii\base\NotSupportedException;
-
-//                $UserQuery->byTwitterId($Client->getId());
+                $UserQuery->byTwitterId($Client->getId());
                 break;
             case 'vkontakte':
 //                @todo implement vkontakte support
