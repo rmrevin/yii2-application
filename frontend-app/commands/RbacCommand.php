@@ -6,7 +6,7 @@
 
 namespace frontend\commands;
 
-use crm\Permissions as P;
+use frontend\Permissions as P;
 use rmrevin\yii\rbac\RbacFactory as RF;
 
 /**
@@ -45,23 +45,7 @@ class RbacCommand extends \rmrevin\yii\rbac\Command
     protected function permissions()
     {
         return [
-            RF::Permission(P::ACCESS, 'Имеет доступ к системе'),
-            /** Account module */
-            RF::Permission(P::ACCOUNT_ACCESS, 'Имеет доступ к модулю пользователей'),
-            /** Calendar module */
-            RF::Permission(P::CALENDAR_ACCESS, 'Имеет доступ к модулю кулендаря'),
-            /** Client module */
-            RF::Permission(P::CLIENT_ACCESS, 'Имеет доступ к модулю клиентов'),
-            /** Event module */
-            RF::Permission(P::EVENT_ACCESS, 'Имеет доступ к модулю акций'),
-            /** Order module */
-            RF::Permission(P::ORDER_ACCESS, 'Имеет доступ к модулю заказов'),
-            /** Comment module */
-            RF::Permission(P::COMMENT_CREATE, 'Может создавать комментарии'),
-            RF::Permission(P::COMMENT_UPDATE, 'Может изменять все комментарии'),
-            RF::Permission(P::COMMENT_UPDATE_OWN, 'Может изменять свои комментарии'),
-            RF::Permission(P::COMMENT_DELETE, 'Может удалять все комментарии'),
-            RF::Permission(P::COMMENT_DELETE_OWN, 'Может удалять свои комментарии'),
+            RF::Permission(P::ACCESS, 'Grant access'),
         ];
     }
 
@@ -88,18 +72,8 @@ class RbacCommand extends \rmrevin\yii\rbac\Command
     {
         return [
             P::ROLE_ADMIN => [
-                P::ACCOUNT_ACCESS,
-                P::COMMENT_UPDATE,
-                P::COMMENT_DELETE,
             ],
             P::ROLE_MANAGER => [
-                P::CALENDAR_ACCESS,
-                P::CLIENT_ACCESS,
-                P::EVENT_ACCESS,
-                P::ORDER_ACCESS,
-                P::COMMENT_CREATE,
-                P::COMMENT_UPDATE_OWN,
-                P::COMMENT_DELETE_OWN,
             ],
             P::ROLE_USER => [
                 P::ACCESS,

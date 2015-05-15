@@ -16,4 +16,6 @@ class Permissions
     const ROLE_USER = 'user';
     const ROLE_MANAGER = 'manager';
     const ROLE_ADMIN = 'admin';
+
+    const ACCESS = 'access';
 }
