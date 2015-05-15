@@ -174,6 +174,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
+     * @param string $password password to validate
+     * @return bool if password provided is valid for current user
+     */
+    public function validatePassword($password)
+    {
+        return Security()->validatePassword($password, $this->password_hash);
+    }
+
+    /**
      * @return array
      */
     public function getRoles()
