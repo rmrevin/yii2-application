@@ -24,6 +24,7 @@ return [
     'controllerMap' => [
         'fixture' => frontend\commands\FixtureCommand::class,
         'user' => frontend\commands\UserCommand::class,
+        'rbac' => frontend\commands\RbacCommand::class,
         'migrate' => [
             'class' => yii\console\controllers\MigrateController::class,
             'templateFile' => '@common/views/migration.php',

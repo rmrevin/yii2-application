@@ -36,6 +36,49 @@ class UserQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * @param string|array $name
+     * @return self
+     */
+    public function byName($name)
+    {
+        $this->andWhere(['name' => $name]);
+
+        return $this;
+    }
+
+    /**
+     * @param string|array $email
+     * @return self
+     */
+    public function byEmail($email)
+    {
+        $this->andWhere(['email' => $email]);
+
+        return $this;
+    }
+
+    /**
+     * @param string|array $login
+     * @return self
+     */
+    public function byLogin($login)
+    {
+        $this->andWhere(['login' => $login]);
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function onlyNotDeleted()
+    {
+        $this->andWhere(['deleted' => \resources\User::NOT_DELETED]);
+
+        return $this;
+    }
+
+    /**
      * @param string $class
      * @param integer|array $social_id
      * @return $this|static
@@ -131,58 +174,4 @@ class UserQuery extends \yii\db\ActiveQuery
     {
         return $this->bySocialId(\resources\User\Auth\Yandex::class, $Yandex_id);
     }
-
-    /**
-     * @param string|array $token
-     * @return self
-     */
-    public function byToken($token)
-    {
-        $this->andWhere(['token' => $token]);
-
-        return $this;
-    }
-
-    /**
-     * @param string|array $name
-     * @return self
-     */
-    public function byName($name)
-    {
-        $this->andWhere(['name' => $name]);
-
-        return $this;
-    }
-
-    /**
-     * @param string|array $email
-     * @return self
-     */
-    public function byEmail($email)
-    {
-        $this->andWhere(['email' => $email]);
-
-        return $this;
-    }
-
-    /**
-     * @param string|array $login
-     * @return self
-     */
-    public function byLogin($login)
-    {
-        $this->andWhere(['login' => $login]);
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    public function onlyNotDeleted()
-    {
-        $this->andWhere(['deleted' => \resources\User::NOT_DELETED]);
-
-        return $this;
-    }
-} 
+}
