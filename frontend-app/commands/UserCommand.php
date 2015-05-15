@@ -45,8 +45,9 @@ class UserCommand extends \yii\console\Controller
         $User = new \resources\User([
             'name' => $name,
             'email' => $email,
-            'deleted' => \resources\User::NOT_DELETED,
             'password' => $pass,
+            'activated' => \resources\User::ACTIVATED,
+            'deleted' => \resources\User::NOT_DELETED,
         ]);
 
         $User->save();
