@@ -6,14 +6,6 @@
 
 namespace frontend\components;
 
-use common;
-use frontend;
-use rmrevin\yii\minify\HtmlCompressor;
-use services\Activity\models\Activity;
-use services\Geo;
-use yii\base\Event;
-use yii\web\Response;
-
 /**
  * Class Controller
  * @package frontend\components
@@ -21,7 +13,7 @@ use yii\web\Response;
 class Controller extends \yii\web\Controller
 {
 
-    use common\helpers\UseSslTrait;
+    use \common\helpers\UseSslTrait;
 
     /**
      * @inheritdoc
@@ -39,6 +31,5 @@ class Controller extends \yii\web\Controller
 
     public function __destruct()
     {
-        Activity::saveAll();
     }
 }
