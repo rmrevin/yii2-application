@@ -67,6 +67,42 @@
         </if>
     </target>
 
+    <target name="composer/production" if="environment.exists">
+        <if>
+            <available type="file" file="../composer.phar"/>
+            <then>
+                <echo>Обновление композера...</echo>
+                <exec command="../composer.phar selfupdate" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="../composer.phar install --prefer-dist --no-dev" passthru="true"/>
+            </then>
+            <else>
+                <echo>Обновление композера...</echo>
+                <exec command="./getcomposer" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="./composer.phar install --prefer-dist --no-dev" passthru="true"/>
+            </else>
+        </if>
+    </target>
+
+    <target name="composer/update" if="environment.exists">
+        <if>
+            <available type="file" file="../composer.phar"/>
+            <then>
+                <echo>Обновление композера...</echo>
+                <exec command="../composer.phar selfupdate" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="../composer.phar update --prefer-dist" passthru="true"/>
+            </then>
+            <else>
+                <echo>Обновление композера...</echo>
+                <exec command="./getcomposer" passthru="true"/>
+                <echo>Обновление зависимостей...</echo>
+                <exec command="./composer.phar update --prefer-dist" passthru="true"/>
+            </else>
+        </if>
+    </target>
+
     <target name="npm" if="environment.exists">
         <echo>Обновление зависимостей nodejs...</echo>
         <exec command="npm install" passthru="true"/>

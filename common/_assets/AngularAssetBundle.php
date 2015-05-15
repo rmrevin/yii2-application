@@ -26,7 +26,6 @@ class AngularAssetBundle extends \yii\web\AssetBundle
         'angular-resource/angular-resource.min.js',
         'angular-cache/dist/angular-cache.min.js',
         'angular-bootstrap/ui-bootstrap-tpls.min.js',
-        'angular-ui-router/release/angular-ui-router.min.js',
         'angular-loading-bar/build/loading-bar.min.js',
         'angular-aria/angular-aria.min.js',
         'angular-material/angular-material.min.js',

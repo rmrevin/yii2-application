@@ -14,6 +14,7 @@ angular.module('YiiApp', [
 
       var $token = jQuery('meta[name=token]');
       if ($token.length > 0) {
+        // @todo conflict with web server authorization
         $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + $token.prop('content');
       }
     }

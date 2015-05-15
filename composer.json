@@ -22,10 +22,13 @@
     "yiisoft/yii2-imagine": "~2.0",
     "yiisoft/yii2-authclient": "~2.0",
 
-    "rmrevin/yii2-fontawesome": "~2.8",
-    "rmrevin/yii2-minify-view": "~1.5",
-    "rmrevin/yii2-rbac-migration": "~1.1",
-    "rmrevin/yii2-postman": "~2.0"
+    "rmrevin/yii2-fontawesome": "~2.10",
+    "rmrevin/yii2-socicon": "~1.0",
+    "rmrevin/yii2-minify-view": "~1.7",
+    "rmrevin/yii2-rbac-command": "~1.1",
+    "rmrevin/yii2-comments": "~1.1",
+    "rmrevin/yii2-xxtea": "~1.2",
+    "rmrevin/yii2-postman": "~2.2"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0",

@@ -24,9 +24,10 @@ define('MYSQL_BASE', 'database');
 define('MYSQL_DSN', 'mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=' . MYSQL_BASE);
 
 /** Данные подключения к тестовой БД */
-define('MYSQL_TEST_DSN', 'mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=database_test');
 define('MYSQL_TEST_USER', 'user');
 define('MYSQL_TEST_PASS', null);
+define('MYSQL_TEST_BASE', 'database__test');
+define('MYSQL_TEST_DSN', 'mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=' . MYSQL_TEST_BASE);
 
 /** Реквизиты smtp сервера */
 define('SMTP_HOST', null);
