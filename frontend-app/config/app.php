@@ -32,7 +32,8 @@ return [
     'sourceLanguage' => 'ru_RU',
     'bootstrap' => ['log'],
     'modules' => [
-        'blank' => frontend\modules\Blank\Module::class,
+        //'blank' => frontend\modules\Blank\Module::class,
+        'account' => frontend\modules\Account\Module::class,
     ],
     'components' => [
         'db' => $component_db,
@@ -52,6 +53,7 @@ return [
         'errorHandler' => $params['component.errorHandler'],
         'log' => $params['component.log'],
         'request' => $params['component.request'],
+        'authClientCollection' => $params['component.authClientCollection'],
     ],
     'params' => $params,
 ];

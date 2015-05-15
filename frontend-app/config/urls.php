@@ -6,5 +6,6 @@
 
 return array_merge(
     include(\Yii::getAlias('@frontend/modules/Account/urls.php')),
+    include(\Yii::getAlias('@frontend/modules/Blank/urls.php')),
     []
 );
