@@ -25,9 +25,9 @@ class RbacCommand extends \rmrevin\yii\rbac\Command
     protected function roles()
     {
         return [
-            RF::Role(P::ROLE_ADMIN, 'Администратор'),
-            RF::Role(P::ROLE_MANAGER, 'Менеджер'),
-            RF::Role(P::ROLE_USER, 'Пользователь'),
+            RF::Role(P::ROLE_ADMIN, 'Administrator'),
+            RF::Role(P::ROLE_MANAGER, 'Manager'),
+            RF::Role(P::ROLE_USER, 'User'),
         ];
     }
 
