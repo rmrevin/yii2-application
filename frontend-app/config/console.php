@@ -37,9 +37,12 @@ return [
     'components' => [
         'db' => $params['component.db']['frontend'],
         'db.test' => $params['component.db']['frontend.test'],
-        'cache' => $params['component.cache'],
         'security' => $params['component.security'],
         'user' => $params['component.user'],
+        'cache' => $params['component.cache'],
+        'schemaCache' => $params['component.schemaCache'],
+        'sessionCache' => $params['component.sessionCache'],
+        'rbacCache' => $params['component.rbacCache'],
         'authManager' => $params['component.authManager'],
         'i18n' => $params['component.i18n'],
         'log' => $params['component.log'],

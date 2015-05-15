@@ -10,6 +10,7 @@ $defaultDbConfig = [
     'class' => yii\db\Connection::class,
     'charset' => 'utf8',
     'enableSchemaCache' => true,
+    'schemaCache' => 'schemaCache',
 ];
 
 return [
@@ -59,13 +60,23 @@ return [
         'itemChildTable' => '{{%rbac_item_child}}',
         'assignmentTable' => '{{%rbac_assignment}}',
         'ruleTable' => '{{%rbac_rule}}',
-        'cache' => 'cache',
+        'cache' => 'rbacCache',
     ],
     'component.cache' => [
-        'class' => yii\caching\DummyCache::class,
+        'class' => yii\caching\DbCache::class, // apc cache not available in cli!
+        'keyPrefix' => 'normal-',
+    ],
+    'component.schemaCache' => [
+        'class' => yii\caching\ApcCache::class, // apc cache not available in cli!
+        'keyPrefix' => 'schema-',
     ],
     'component.sessionCache' => [
-        'class' => yii\caching\FileCache::class,
+        'class' => yii\caching\ApcCache::class, // apc cache not available in cli!
+        'keyPrefix' => 'session-',
+    ],
+    'component.rbacCache' => [
+        'class' => yii\caching\ApcCache::class, // apc cache not available in cli!
+        'keyPrefix' => 'rbac-',
     ],
     'component.assetManager' => [
         'basePath' => '@webroot/assets',
