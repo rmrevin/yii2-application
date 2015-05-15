@@ -42,7 +42,7 @@ return [
         'cache' => $params['component.cache'],
         'schemaCache' => $params['component.schemaCache'],
         'sessionCache' => $params['component.sessionCache'],
-        'rbacCache' => $params['component.rbacCache'],
+        'authManagerCache' => $params['component.authManagerCache'],
         'authManager' => $params['component.authManager'],
         'i18n' => $params['component.i18n'],
         'log' => $params['component.log'],

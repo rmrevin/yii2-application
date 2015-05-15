@@ -60,7 +60,7 @@ return [
         'itemChildTable' => '{{%rbac_item_child}}',
         'assignmentTable' => '{{%rbac_assignment}}',
         'ruleTable' => '{{%rbac_rule}}',
-        'cache' => 'rbacCache',
+        'cache' => 'authManagerCache',
     ],
     'component.cache' => [
         'class' => yii\caching\DbCache::class, // apc cache not available in cli!
@@ -74,9 +74,9 @@ return [
         'class' => yii\caching\ApcCache::class, // apc cache not available in cli!
         'keyPrefix' => 'session-',
     ],
-    'component.rbacCache' => [
+    'component.authManagerCache' => [
         'class' => yii\caching\ApcCache::class, // apc cache not available in cli!
-        'keyPrefix' => 'rbac-',
+        'keyPrefix' => 'auth-manager-',
     ],
     'component.assetManager' => [
         'basePath' => '@webroot/assets',

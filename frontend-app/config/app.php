@@ -51,7 +51,7 @@ return [
         'cache' => $params['component.cache'],
         'schemaCache' => $params['component.schemaCache'],
         'sessionCache' => $params['component.sessionCache'],
-        'rbacCache' => $params['component.rbacCache'],
+        'authManagerCache' => $params['component.authManagerCache'],
         'errorHandler' => $params['component.errorHandler'],
         'log' => $params['component.log'],
         'request' => $params['component.request'],

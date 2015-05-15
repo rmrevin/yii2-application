@@ -33,8 +33,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     use \common\traits\ActiveRecord\ActivationTrait;
     use \common\traits\ActiveRecord\SoftDeleteTrait;
 
-    /** @var array */
-    private $_access = [];
+    /** @var string */
+    public $password;
 
     /**
      * @inheritdoc
@@ -63,7 +63,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             /** type validators */
-            [['name', 'login', 'avatar', 'password_hash'], 'string'],
+            [['name', 'login', 'avatar', 'password', 'password_hash'], 'string'],
             [['email'], 'email'],
             [['activated', 'deleted'], 'boolean'],
 
@@ -78,6 +78,37 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['deleted'], 'default', 'value' => self::NOT_DELETED],
         ];
     }
+
+    /**
+     * @return bool|string
+     */
+    public function isAvailable()
+    {
+        $result = true;
+
+        switch ($this->activated) {
+            default:
+            case \resources\User::NOT_ACTIVATED:
+                $result = 'not-activated';
+                break;
+            case \resources\User::ACTIVATED:
+                break;
+        }
+
+        switch ($this->deleted) {
+            default:
+            case \resources\User::DELETED:
+                $result = 'deleted';
+                break;
+            case \resources\User::NOT_DELETED:
+                break;
+        }
+
+        return $result;
+    }
+
+    /** @var array */
+    private $_access = [];
 
     /**
      * @param string $permissionName
@@ -196,8 +227,20 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             function (\yii\base\ModelEvent $Event) {
                 /** @var self $Model */
                 $Model = $Event->sender;
+                $Model->password_hash = Security()->generatePasswordHash($this->password);
                 $Model->auth_key = Security()->generateRandomString();
                 $Model->token = Security()->generateRandomString();
+            }
+        );
+
+        $this->on(
+            self::EVENT_BEFORE_UPDATE,
+            function (\yii\base\ModelEvent $Event) {
+                /** @var self $Model */
+                $Model = $Event->sender;
+                if (!empty($this->password)) {
+                    $Model->password_hash = Security()->generatePasswordHash($this->password);
+                }
             }
         );
     }
