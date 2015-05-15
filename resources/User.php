@@ -29,8 +29,9 @@ namespace resources;
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
-    use User\traits\UserSocialTrait;
-    use User\traits\UserAvailableTrait;
+    use \resources\User\traits\UserSocialTrait;
+    use \common\traits\ActiveRecord\ActivationTrait;
+    use \common\traits\ActiveRecord\SoftDeleteTrait;
 
     /** @var array */
     private $_access = [];

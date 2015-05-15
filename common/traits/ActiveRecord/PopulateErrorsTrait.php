@@ -12,7 +12,7 @@ namespace common\traits\ActiveRecord;
  *
  * @method hasProperty
  * @method hasAttribute
- * @method addError
+ * @method addError($attribute, $error = '')
  */
 trait PopulateErrorsTrait
 {
