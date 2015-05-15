@@ -133,7 +133,7 @@ class SignController extends Account\components\Controller
 
                 $AuthResponse->result = Json::encode($User->id);
 
-                AuthManager()->assign(RbacFactory::Role(\resources\User::ROLE_USER), $User->id);
+                AuthManager()->assign(RbacFactory::Role(\frontend\Permissions::ROLE_USER), $User->id);
             } else {
                 $AuthResponse->result = Json::encode($User->getErrors());
             }

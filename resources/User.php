@@ -108,7 +108,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new \yii\base\NotSupportedException;
+        return static::find()
+            ->byToken($token)
+            ->one();
     }
 
     /**
@@ -176,9 +178,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function getAllRoles()
     {
         return [
-            User::ROLE_ADMIN => \Yii::t('user', 'Администратор'),
-            User::ROLE_MANAGER => \Yii::t('user', 'Менеджер'),
-            User::ROLE_USER => \Yii::t('user', 'Пользователь'),
+            \frontend\Permissions::ROLE_ADMIN => \Yii::t('user', 'Администратор'),
+            \frontend\Permissions::ROLE_MANAGER => \Yii::t('user', 'Менеджер'),
+            \frontend\Permissions::ROLE_USER => \Yii::t('user', 'Пользователь'),
         ];
     }
 
@@ -197,8 +199,4 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     const NOT_DELETED = 0;
     const DELETED = 1;
-
-    const ROLE_USER = 'user';
-    const ROLE_MANAGER = 'manager';
-    const ROLE_ADMIN = 'admin';
 }

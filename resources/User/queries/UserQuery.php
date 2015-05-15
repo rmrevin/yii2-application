@@ -25,6 +25,17 @@ class UserQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * @param string|array $token
+     * @return self
+     */
+    public function byToken($token)
+    {
+        $this->andWhere(['token' => $token]);
+
+        return $this;
+    }
+
+    /**
      * @param string $class
      * @param integer|array $social_id
      * @return $this|static

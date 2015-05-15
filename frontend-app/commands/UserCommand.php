@@ -51,7 +51,7 @@ class UserCommand extends \yii\console\Controller
 
         $User->save();
         if (!$User->hasErrors()) {
-            AuthManager()->assign(RbacFactory::Role(\resources\User::ROLE_ADMIN), $User->id);
+            AuthManager()->assign(RbacFactory::Role(\frontend\Permissions::ROLE_ADMIN), $User->id);
 
             $this->stdout("User have been successfully added\n", \yii\helpers\Console::FG_GREEN);
         } else {
