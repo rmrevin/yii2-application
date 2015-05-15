@@ -9,26 +9,40 @@
 
 use yii\helpers\Html;
 
-$this->beginPage();
-
 frontend\_assets\AppAsset::register($this);
+
+$title = empty($this->title)
+    ? APP_NAME
+    : Html::encode($this->title) . ' ~ ' . APP_NAME;
+
+/** @var \frontend\components\Controller $controller */
+$controller = $this->context;
+
+/** @var \resources\User|null $User */
+$User = User()->identity;
+
+$this->beginPage();
 
 ?><!DOCTYPE html>
 <?= Html::beginTag('html', [
     'lang' => Yii::$app->language,
-    'ng-app' => 'YiiApp',
+    'ng-app' => 'LandingxApp',
 ]) ?>
 <head>
+    <!--[if IE]>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?
     echo Html::csrfMetaTags();
-    echo Html::tag('title', Html::encode($this->title) . ' ~ Sitename');
+    echo Html::tag('title', $title);
 
     echo Html::tag('meta', '', ['charset' => Yii::$app->charset]);
-    echo Html::tag('meta', '', ['http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge']);
-    echo Html::tag('meta', '', [
-        'name' => 'viewport',
-        'content' => 'width=device-width, initial-scale=1, maximum-scale=1'
-    ]);
+
+    if (!User()->isGuest) {
+        echo Html::tag('meta', null, ['name' => 'token', 'content' => $User->token]) . "\n";
+    }
 
     echo Html::tag('link', null, [
         'rel' => 'stylesheet',
@@ -45,11 +59,17 @@ frontend\_assets\AppAsset::register($this);
 </head>
 
 <body>
-<? $this->beginBody() ?>
+<?
 
-<?= $content ?>
+$this->beginBody();
 
-<? $this->endBody() ?>
+echo $content;
+
+echo $this->render('_toast');
+
+$this->endBody();
+
+?>
 </body>
 </html><?
 
