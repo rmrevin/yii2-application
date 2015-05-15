@@ -6,7 +6,7 @@
 
 namespace frontend\commands;
 
-use rmrevin\yii\rbac\RbacFactory;
+use rmrevin\yii\rbac\RbacFactory as RF;
 
 /**
  * Class UserCommand
@@ -51,7 +51,8 @@ class UserCommand extends \yii\console\Controller
 
         $User->save();
         if (!$User->hasErrors()) {
-            AuthManager()->assign(RbacFactory::Role(\frontend\Permissions::ROLE_ADMIN), $User->id);
+            AuthManager()->assign(RF::Role(\frontend\Permissions::ROLE_USER), $User->id);
+            AuthManager()->assign(RF::Role(\frontend\Permissions::ROLE_ADMIN), $User->id);
 
             $this->stdout("User have been successfully added\n", \yii\helpers\Console::FG_GREEN);
         } else {
