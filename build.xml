@@ -12,19 +12,19 @@
 
     <!-- Конфиг билда для продакшена -->
     <target name="build/production"
-            depends="environment/check,composer,npm,less,environment/init/production,clear,migrations">
+            depends="environment/check,clear,environment/init/production,composer,npm,less,migrations,rbac">
         <echo>Билд продакшена успешно завершён</echo>
     </target>
 
     <!-- Конфиг билда для demo площадки -->
     <target name="build/demo"
-            depends="environment/check,composer,npm,less,environment/init/demo,clear,migrations">
+            depends="environment/check,clear,environment/init/demo,composer,npm,less,migrations,rbac">
         <echo>Билд demo площадки успешно завершён</echo>
     </target>
 
     <!-- Конфиг билда для dev площадки -->
     <target name="build/dev"
-            depends="environment/check,composer,npm,less,environment/init,clear,migrations">
+            depends="environment/check,clear,environment/init,composer,npm,less,migrations,rbac">
         <echo>Билд dev площадки успешно завершён</echo>
     </target>
 
@@ -46,6 +46,12 @@
             if="environment.exists"
             depends="migrations/frontend">
         <echo>Миграции выполнены</echo>
+    </target>
+
+    <target name="rbac"
+            if="environment.exists"
+            depends="rbac/frontend">
+        <echo>Правила Rbac обновлены</echo>
     </target>
 
     <!-- Таски -->
@@ -150,6 +156,11 @@
     <target name="migrations/frontend" if="environment.exists">
         <echo>Применение миграций frontend...</echo>
         <exec command="./frontend migrate --interactive=0" passthru="true"/>
+    </target>
+
+    <target name="rbac/frontend" if="environment.exists">
+        <echo>Обновление правил rbac frontend...</echo>
+        <exec command="./frontend rbac/update" passthru="true"/>
     </target>
 
     <target name="clear/frontend" if="environment.exists">
