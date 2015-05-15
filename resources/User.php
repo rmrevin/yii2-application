@@ -15,11 +15,13 @@ namespace resources;
  * @property string $name
  * @property string $email
  * @property string $avatar
- * @property boolean $deleted
+ * @property string $password_hash
  * @property string $token
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_at
+ * @property boolean $activated
+ * @property boolean $deleted
  *
  * @method User\queries\UserQuery hasMany($class, $link)
  * @method User\queries\UserQuery hasOne($class, $link)
@@ -60,16 +62,18 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             /** type validators */
-            [['name', 'login', 'avatar'], 'string', 'length' => [1, 255]],
+            [['name', 'login', 'avatar', 'password_hash'], 'string'],
             [['email'], 'email'],
-            [['deleted'], 'boolean'],
+            [['activated', 'deleted'], 'boolean'],
 
             /** semantic validators */
             [['name', 'login'], 'required'],
             [['name', 'login', 'email', 'avatar'], 'filter', 'filter' => 'str_clean'],
+            [['activated'], 'in', 'range' => [self::NOT_ACTIVATED, self::ACTIVATED]],
             [['deleted'], 'in', 'range' => [self::NOT_DELETED, self::DELETED]],
 
             /** default values */
+            [['activated'], 'default', 'value' => self::NOT_ACTIVATED],
             [['deleted'], 'default', 'value' => self::NOT_DELETED],
         ];
     }
@@ -169,7 +173,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%account_user}}';
     }
 
     /**
@@ -196,6 +200,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             }
         );
     }
+
+    const NOT_ACTIVATED = 0;
+    const ACTIVATED = 1;
 
     const NOT_DELETED = 0;
     const DELETED = 1;
